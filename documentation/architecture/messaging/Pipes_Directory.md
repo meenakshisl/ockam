@@ -4,7 +4,7 @@
 
 ### Re-send pipe
 
-- Sender attaches a unique ID to every message forwarded.
+- Sender attaches a unique ID to every message forwarded
 - Receiver after sending a message confirms send to Sender with the message ID
 - If Sender does not receive a confirmation in some time - it sends the message again
 - If there are unconfirmed messages - Sender buffers them until it gets confirm
@@ -25,14 +25,13 @@ Delivery properties:
 - Delivery is at-least-once with possible duplicates
 
 Error tolerance:
-- Delivery tolerates failures in the route from Sender to Receiver as long as Receiver is accessible via Receiver route.
-- Delivery does not tolerate failures in the Sender worker.
+- Delivery tolerates failures in the route from Sender to Receiver as long as Receiver is accessible via Receiver route
+- Delivery does not tolerate failures in the Sender worker
 - Delivery tolerates failures in the Receiver worker
-
 
 ### Re-send pipe with multiple unconfirmed messages
 
-Same behaviour as for [resend pipe](Pipes_Directory.md#re-send-pipe), but instead of buffering unsent messages and waiting for confirm
+Same behaviour as for [resend pipe](Pipes_Directory.md#re-send-pipe), but instead of buffering unsent messages and waiting for confirm,
 Sender sends all messages and tracks multiple unconfirmed messages.
 
 <img src="./images/resend_multi_pipe.jpg" width="100%">
@@ -46,7 +45,7 @@ State:
 Internal Routes:
 - A route from Sender to Receiver should be backtraceable
 
-Delivery properties and error tolerance are the same as in [resend pipe](Pipes_Directory.md#re-send-pipe)
+Delivery properties and error tolerance are the same as in [resend pipe](Pipes_Directory.md#re-send-pipe).
 
 ### Stream pipe - pipe with persistent storage
 

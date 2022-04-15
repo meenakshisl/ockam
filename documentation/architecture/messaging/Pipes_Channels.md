@@ -4,11 +4,10 @@
 
 ## Purpose
 
-Pipes and channels are main building blocks for end-to-end messaging.
+Pipes and channels are the main building blocks for end-to-end messaging.
 
 In order to provide end-to-end properties of message delivery, the "ends" need to be defined and have coordinated logic and state.
 This means we need groups of coordinated workers to achieve that.
-
 
 ## Definitions
 
@@ -28,7 +27,7 @@ Pipe is a pair of coordinated workers, Sender and Receiver, such as:
   ```
 
 Pipes facilitate unidirectional message delivery.
-Pipes preserve the return route of the original message BUT do not trace a return route
+Pipes preserve the return route of the original message BUT do not trace a return route.
 
 Pipes may use a coordinated state and send more messages between sender and receiver to provide
 additional message delivery properties.
@@ -63,7 +62,7 @@ Channel is a pair of coordinated workers, C1 and C2, such as:
   ```
 
 Channels facilitate bidirectional message exchange.
-Channels preserver the return route AND trace the return route with the channel address
+Channels preserve the return route AND trace the return route with the channel address.
 
 Same as pipes, channels may provide additional messaging delivery properties and have more messages
 exchanged between C1 and C2.
@@ -74,23 +73,23 @@ exchanged between C1 and C2.
 
 ### Accessibility and session setup
 
-Pipes:
+#### Pipes
 
 In order to have coordinated state, sender and receiver must be accessible by each other. At least receiver should be accessible by the sender.
 
 Since messages are flowing from the sender, receiver does not initiate the communication and rarely needs to store a route to the sender in its state.
 
-1. Static pipe - a pipe in which sender is created with a known route to the receiver
-2. Session pipe - a pipe in which sender is created with a session init route and receiver may be created during the session establishment
+1. Static pipe: a pipe in which sender is created with a known route to the receiver
+2. Session pipe: a pipe in which sender is created with a session init route and receiver may be created during the session establishment
 
 <img src="./images/static_pipe.jpg" width="100%">
 
 <img src="./images/session_pipe.jpg" width="100%">
 
-Channels:
+#### Channels
 
-1. Static channel - a channel where both ends are created with routes to each other
-2. Session channel - a channel where one side is created with a session init route and another may be created during the session establishment
+1. Static channel: a channel where both ends are created with routes to each other
+2. Session channel: a channel where one side is created with a session init route and another may be created during the session establishment
 
 ### Channels using pipes
 
@@ -98,21 +97,17 @@ A channel may use two pipes to deliver messages between channel workers
 
 <img src="./images/channel_pipes.jpg" width="100%">
 
-
 A channel using pipes as means to deliver messages should take into account that pipes do not trace return routes and just pass the incoming message route as a return route.
 
-This means that the route scope inside and outside of the pipe is different and to route messages through the channel workers either:
-- receiver needs to be configured to route messages through the channel
-OR
+This means that the route scope inside and outside the pipe is different and routing messages through the channel workers either:
+- receiver needs to be configured to route messages through the channel, or
 - channel ends should be aware of each other and send messages to each other through the pipes
 
 Using the latter approach message route tracing looks like this:
 
-Given
-
-Channel ends `C1` and `C2`
-Pipe workers `S1->2`, `R1->2`, `S2->1` and `R2->1`
-
+Given:
+- Channel ends `C1` and `C2`
+- Pipe workers `S1->2`, `R1->2`, `S2->1` and `R2->1`
 
 Message sent to `C1` with the routes:
 ```
@@ -140,10 +135,10 @@ RR: [C2] ; return_route
 
 `C2'` is an address of worker C2 which is used for internal channel communication, it may be different from the address used for external communication.
 
+[//]: # (TODO: rephrase?)
 What happens here is the channel end which receives a message forwards it through the pipe and the channel end which is supposed to send that message.
 
 Pipe channels can be dynamically established using [pipe channel session process](https://github.com/ockam-network/proposals/blob/main/design/0011-pipes-and-channels/pipe_channel_session.md)
-
 
 **Back to:** [Delivery properties](Delivery.md)
 

@@ -3,16 +3,16 @@
 Delivery through routes of multiple workers and transports depends on those workers behaviour.
 Received sequences may be different from sent, messages may be missing, reordered or compromised.
 
-The longer the pipeline of workers and transports between sender and receiver, harder it becomes to reason about delivery.
+The longer the pipeline of workers and transports between sender and receiver, the harder it becomes to reason about delivery.
 
-To simplify that, we are going formalize a set of properties, and describe how they can be combined.
+To simplify that, we are going to formalize a set of properties, and describe how they can be combined.
 
 ## End-to-end
 
 Delivery properties exist between two workers (sender and receiver) on a route.
 
 For example when worker `A` send messages to worker `D` via route `A->B;B->C;C->D`,
-we describe delivery on route `A->D = A->B;B->C;C->D`
+we describe delivery on route `A->D = A->B;B->C;C->D`.
 
 Delivery properties on routes `B->C` and `C->D` may be different, but as long as we can validate properties of `A->D`, we can ignore that.
 
@@ -22,12 +22,12 @@ End-to-end approach allows us to abstract away complex parts of the message deli
 
 ## Core combination techniques
 
-In order to combine delivery over multiple steps, we use two main techniques:
+In order to combine delivery over multiple steps, we use the following techniques:
 
 ### Pipelining:
 
-If we have a delivery `A->B` and delivery `B->C`, and we know the properties of those deliveries, (we know how the workers forwarding messages work).
-Then we can tell how a pipelined delivery `A->B;B->C` would behave.
+If we have a delivery `A->B` and delivery `B->C`, and we know the properties of those deliveries (i.e. we know how each worker forwards messages),
+then we can tell how a pipelined delivery `A->B;B->C` would behave.
 
 <img src="./images/pipelining.jpg" width="100%">
 
@@ -43,11 +43,9 @@ Special workers can be used to "wrap" unreliable delivery and provide reliable d
 
 <img src="./images/wrapping.jpg" width="100%">
 
-Main tool to implement end-to-end wrapping is called Pipe,
-more on pipes in [Pipes and Channels](./Pipes_Channels.md)
+Main tool to implement end-to-end wrapping is called [Pipe](./Pipes_Channels.md).
 
-
-**When defining Delivery Properties we will highlight how they can be combined using those two techniques**
+**When defining Delivery Properties we will highlight how they can be combined using those two techniques**.
 
 ## Properties
 
@@ -79,3 +77,5 @@ more on pipes in [Pipes and Channels](./Pipes_Channels.md)
 
     Autheniticity describes whether messages received originated at the specific sender.
     Authorization describes messages can be received by a certain receiver if they were send by a certain sender or went through a certain route.
+
+**Up next**: [Accessibility](./Accessibility.md)

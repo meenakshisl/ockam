@@ -9,7 +9,7 @@ different from an external exchange with other workers.
 In order for pipe workers to distinguish between external and internal API messages,
 they can use different addresses.
 
-Each pipe worker would have `internal` address, to talk to another pipe end and an
+Each pipe worker would have `internal` address to talk to another pipe end, and an
 `external` address to communicate to other workers.
 
 All messages received on the `internal` address are handled as pipe internal API messages.
@@ -27,9 +27,9 @@ For example, for the confirm pipe:
 Pipes (and especially channels) often use bidirectional communication and rely on coordinated state.
 
 Simplest approach to get it is to provide this state on worker start.
-However sometimes it's not possible because routes between workers can be dynamic (contain workers with random addresses) or state needs to be dynamically generated.
+However, sometimes it's not possible because routes between workers can be dynamic (contain workers with random addresses) or state needs to be dynamically generated.
 
-In order to coordinate this state workers can echange some handshake messages before starting to run the
+In order to coordinate this state workers can exchange some handshake messages before starting to run the
 main pipe or channel logic.
 
 We call this approach Sessions and such pipes and channels **session pipes** and **session channels**
