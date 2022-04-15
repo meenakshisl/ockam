@@ -35,11 +35,10 @@ In static sessions, init route and data route are usually the same.
 
 ### Dynamic routes
 
-But, usually, session handshake can be used to discover the routes.
-Sessions are often used just to discover the routes between workers.
+But, usually, session handshake can be used to discover the routes. Sessions are often used just to discover the routes between workers.
 
-To discover a responder, initiator uses discovery worker route that is known in advance to initiator.
-Discovery worker then forwards the handshake to responder, which can send a handshake back to initiator.
+To discover a responder, initiator uses discovery worker route that is known in advance to initiator. Discovery worker then forwards the
+handshake to responder, which can send a handshake back to initiator.
 
 Such discovery often relies on routes being **backtraceable**.
 
@@ -47,7 +46,8 @@ In this case init route is a route to discovery worker and data route is created
 
 <img src="./images/session_discovery.jpg" width="100%">
 
-Discovery workers may either serve as proxies for the handshake messages or hand over routing by tracing or not tracing its return address in the handshake messages.
+Discovery workers may either serve as proxies for the handshake messages or hand over routing by tracing or not tracing its return address
+in the handshake messages.
 
 Hand-over workers require `A` to be mutually accessible from `B` via `rrA` and `rrB`.
 
@@ -59,12 +59,12 @@ Hand-over workers require `A` to be mutually accessible from `B` via `rrA` and `
 
 Spawner is a type of worker which creates new workers on demand.
 
-Spawners create new workers when receiving a "create" message.
-Newly spawned workers send the "create_ok" message when initialized to "reply route" to populate the address of a new worker.
+Spawners create new workers when receiving a "create" message. Newly spawned workers send the "create_ok" message when initialized to "reply
+route" to populate the address of a new worker.
 
 <img src="./images/spawner.jpg" width="60%">
 
-Reply route may lead to some discovery worker, which will save the spawned worker route and make it awailable to other workers.
+Reply route may lead to some discovery worker, which will save the spawned worker route and make it available to other workers.
 
 <img src="./images/spawner_separate_discovery.jpg" width="80%">
 
@@ -72,9 +72,8 @@ Spawner worker may serve as a discovery worker if reply route leads back to the 
 
 <img src="./images/spawner_discovery.jpg" width="50%">
 
-If "create" message route is backtraced, reply route can be a backtrace to the original message.
-In this case the worker which sent "create" message will receive "create_ok" message.
-This type of spawning can be used to spawn Responders using session handshake.
+If "create" message route is backtraced, reply route can be a backtrace to the original message. In this case the worker which sent "create"
+message will receive "create_ok" message. This type of spawning can be used to spawn Responders using session handshake.
 
 Session init route leads to the spawner.
 
@@ -86,7 +85,6 @@ Session data route will be traced with "create_ok" message
 Pipe and channel sessions can be established using discovery and spawners.
 
 <img src="./images/spawner_pipe_session.jpg" width="80%">
-
 
 ## Routing session handshakes
 
@@ -108,11 +106,11 @@ Ping handshake with discovery worker or spawner:
 
 Multi-stage handshake with discovery, which can be used if init route is not backtraceable:
 
-- Initiator sends a init to responder
+- Initiator sends an init to responder
 - Responder gets a backtraceable route to initiator from somewhere (e.g. additional metadata)
 - Responder sends a ping to initiator on this route
 - Initiator replies with pong on the return route
-- (Optionaly) initiator and responder may continue sending handshakes
+- (Optionally) initiator and responder may continue sending handshakes
 
 Example: responder is listening to stream events and establishes a TCP connection on init message.
 
@@ -124,8 +122,8 @@ Here are some state machine diagrams for different kinds of sessions:
 
 ### Simple session
 
-In this session Initiator and Responder establish a session state and move to the data stage.
-Session state is final and not re-negotiated after establishment.
+In this session Initiator and Responder establish a session state and move to the data stage. Session state is final and not re-negotiated
+after establishment.
 
 Initiator:
 
@@ -153,7 +151,7 @@ Static Responder:
 
 Spawned recoverable responder would look the same as simple responder because it's created anew on session establishment.
 
-## Resetable session
+## Resettable session
 
 This behaviour allows re-negotiation on-demand.
 

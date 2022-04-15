@@ -7,16 +7,18 @@ Ordering of a delivery describes order in which messages are received in relatio
 #### Monotonic ordering
 
 Delivery is monotonically ordered when:
-  - In a sequence containing messages `m1, m2 ...`
-  - A message `m1` which was sent before message `m2`, cannot be received after `m2`
+
+- In a sequence containing messages `m1, m2 ...`
+- A message `m1` which was sent before message `m2`, cannot be received after `m2`
 
 <img src="./images/monotonic.jpg" width="100%">
 
 #### Strict monotonic ordering
 
 Delivery is strictly ordered when:
-  - In a sequence `m1, m2, ...`
-  - A message `m1` which was sent before message `m2`, cannot be received after `m2` or after `m1`
+
+- In a sequence `m1, m2, ...`
+- A message `m1` which was sent before message `m2`, cannot be received after `m2` or after `m1`
 
 <img src="./images/strict.jpg" width="100%">
 
@@ -26,8 +28,9 @@ The difference between monotonic and strict ordering is that
 #### Continuous ordering
 
 Delivery is continuously monotonic ordered when:
-  - In a sequence `m1, m2, ...`
-  - A message `m2` which was sent after `m1`, cannot be received before `m1`
+
+- In a sequence `m1, m2, ...`
+- A message `m2` which was sent after `m1`, cannot be received before `m1`
 
 <img src="./images/continuous.jpg" width="100%">
 
@@ -37,8 +40,9 @@ The difference between monotonic and continuous ordering is that
 #### Continuous strict ordering (Absolute ordering)
 
 Delivery is absolute ordered when:
-  - In a sequence `m1, m2, ...`
-  - A message `m2` which was sent after `m1` can only be received after `m1`
+
+- In a sequence `m1, m2, ...`
+- A message `m2` which was sent after `m1` can only be received after `m1`
 
 <img src="./images/absolute.jpg" width="100%">
 
@@ -60,12 +64,12 @@ However, workers **may process** messages in different order.
 
 ## Ordering in complex routes
 
-When forwarding messages through an intermediate worker, it can process messages in different order, which might reorder messages in delivery.
+When forwarding messages through an intermediate worker, it can process messages in different order, which might reorder messages in
+delivery.
 
 ### Ordered processors
 
-**Ordered processor** is a worker which upon receiving a sequence of messages,
-sends a sequence of processed results in the same order.
+**Ordered processor** is a worker which upon receiving a sequence of messages, sends a sequence of processed results in the same order.
 
 Processors ordering has the same [ordering types](./Ordering.md#types-of-ordering) as delivery.
 
@@ -85,8 +89,8 @@ Pipelining strict and non-strict delivery results in non-strict delivery.
 
 ### Ordered pipes
 
-A [pipe](./Pipes_Channels.md) in which receiver sends messages in the same order as sender receives them,
-can be viewed as an ordered processor.
+A [pipe](./Pipes_Channels.md) in which receiver sends messages in the same order as sender receives them, can be viewed as an ordered
+processor.
 
 Ordered pipes can be injected to turn unordered delivery on a route (or multiple routes)
 into an ordered delivery.
