@@ -1585,6 +1585,33 @@ dependencies = [
 ]
 
 [[package]]
+name = "ockam_capability"
+version = "0.1.0"
+dependencies = [
+ "aes-gcm",
+ "arrayref",
+ "cfg-if",
+ "curve25519-dalek",
+ "ed25519-dalek",
+ "hkdf",
+ "ockam",
+ "ockam_core",
+ "ockam_macros",
+ "parking_lot",
+ "rand 0.8.5",
+ "rand_pcg",
+ "serde",
+ "sha2",
+ "signature_bbs_plus",
+ "signature_bls",
+ "signature_core",
+ "signature_ps",
+ "tokio",
+ "tracing",
+ "x25519-dalek",
+]
+
+[[package]]
 name = "ockam_channel"
 version = "0.48.0"
 dependencies = [
