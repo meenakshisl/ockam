@@ -25,8 +25,9 @@ public key, and the number of messages the key will be used to sign.
 To sign messages, call the `Issuer::sign` API.
 
 ```rust
-let (public_key, secret_key) = Issuer::new_keys(&mut rand::thread_rng())?;
 let num_messages = 4;
+let (public_key, secret_key) = Issuer::new_keys(num_messages, &mut rand::thread_rng())?;
+
 let generators = MessageGenerators::from_public_key(public_key, num_messages);
 let messages = [
     Message::hash(b"message 1"),
@@ -92,14 +93,15 @@ assert_eq!(res.unwrap_u8(), 1);
 ## Full Example - Blinding, Unblinding, Verifying
 
 ```rust
-use short_group_signatures_core::{error::Error, lib::*};
+use signature_core::{error::Error, lib::*};
 use signature_ps::{Issuer, MessageGenerators, Prover};
 
 fn main() -> Result<(), Error> {
     let mut rng = rand::thread_rng();
-    let (public_key, secret_key) = Issuer::new_keys(&mut rng)?;
     let num_messages = 4;
-    let generators = MessageGenerators::from_secret_key(num_messages, &secret_key);
+    let (public_key, secret_key) = Issuer::new_keys(num_messages, &mut rng)?;
+    
+    let generators = MessageGenerators::from(&secret_key);
     let nonce = Nonce::random(&mut rng);
 
     let (context, blinding) =
